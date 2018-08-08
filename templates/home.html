@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+        background-color: black;
+        background-image: url('joker.jpg');
+        background-repeat: no-repeat;
+        background-size: auto;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size:24px;
+      }
+h1   {
+        color: white;
+        text-align: center;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        text-decoration: underline;
+        }
+ul      {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 25%;
+        background-color: black;
+        position: fixed;
+        overflow: auto;
+        }
+
+li a {
+    display: block;
+    color: LightSlateGray;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: DarkSlateGray;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: grey;
+    color: white;
+}
+div{margin-left:25%;
+padding:1px 16px;
+height:1000px;}
+</style>
+</head>
+  <body>
+    <h1>Best movies</h1>
+    <hr>
+
+    <ul>
+  <li><a class = "active" href= "{{ url_for('get_movies') }}">All movies</a></li>
+  <li><a href= "{{ url_for('send_to_find_page') }}">Find movie</a></li>
+  <li><a href= "{{ url_for('send_to_add_page') }}">Add movie</a></li>
+  <li><a href= "{{ url_for('send_to_delete_page') }}">Delete movie</a></li>
+    </ul>
+
+    <div>
+
+    </div>
+  </body>
+</html>

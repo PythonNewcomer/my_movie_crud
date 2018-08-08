@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+<style>
+body    {
+        background-color: black;
+        background-repeat: no-repeat;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size:24px;
+        }
+h4      {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        color: blue;
+        }
+h3      {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        color: Grey;
+        }
+#movies {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+#movies td, #movies th {
+        color:white;
+        border: 1px solid #ddd;
+        padding: 8px;
+        }
+#movies tr:nth-child(even){
+        background-color: LightSlateGray;
+        }
+#movies tr:hover {
+        background-color: Gray;
+        }
+#movies th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: SlateBlue;
+        color: white;
+        }
+</style>
+</head>
+<body>
+    <h3>
+         <a href = "{{ url_for('show_all') }}">Home page</a>
+      </h3>
+    <h4>
+    {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+    </h4>
+      <hr/>
+
+
+      <table id = 'movies'>
+         <thead>
+            <tr>
+                <th>ID</th>
+               <th>Title</th>
+               <th>Year</th>
+               <th>Country</th>
+               <th>Genre</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for movie in movies %}
+               <tr>
+                   <td>{{ movie.id }}</td>
+                  <td>{{ movie.title }}</td>
+                  <td>{{ movie.year }}</td>
+                  <td>{{ movie.country }}</td>
+                  <td>{{ movie.genre }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+body {
+        background-color: black;
+        background-image: url('joker2.jpg');
+        background-repeat: no-repeat;
+        background-size: auto;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size:24px;
+      }
+h1   {
+        color: white;
+        text-align: center;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        text-decoration: underline;
+        }
+h3      {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        color: Grey;
+        }
+fieldset {
+        color: white;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        text-align: center;
+        display: block;
+        margin-left: 2px;
+        margin-right: 2px;
+        padding-top: 0.35em;
+        padding-bottom: 0.625em;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        border: 3px outset;
+        }
+.button {
+        background-color: Grey;
+        border: none;
+        color: white;
+        padding: 8px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 12px;
+        margin: 4px 2px;
+        border-radius: 4px;
+        }
+.button:hover {
+        background-color: Blue;
+        color: white;
+        }
+.input   {border-radius: 8px;}
+</style>
+</head>
+<body>
+    <h3>
+         <a href = "{{ url_for('show_all') }}">Home page</a>
+      </h3>
+    <fieldset>
+      <legend>Find movie:</legend> <br>
+     <form action="http://127.0.0.1:5000/movie" method="POST"> Movie title:<br><input type="text" class = "input" name="title">
+       <br><br>
+       <input type="submit" class = "button" value="Find">
+        </fieldset>
+     </form>
+</body>
+</html>
