@@ -16,7 +16,7 @@ class Movie(Base):
     __tablename__ = 'Movies'
 
     id = Column(Integer, primary_key=True)
-    title = Column(String, unique=True)
+    title = Column(String, unique=True, nullable=False)
     year = Column(Integer)
     country_id = Column(Integer, ForeignKey('Countries.id'))
     country = relationship("Country")

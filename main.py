@@ -46,42 +46,51 @@ def get_movies():
 @app.route('/movie', methods=['POST'])
 def get_movie():
     title = request.form.get("title")
-    result = session.query(Movie.id, Movie.title, Movie.year, Country.name.label('country'), Genre.name.label('genre'))\
-        .join(Country, isouter=True) \
-        .join(movies_genres_association, isouter=True) \
-        .join(Genre, isouter=True)  \
-        .filter(Movie.title == title) \
-        .first()
-    return render_template('show_movie.html', movie=result)
+    titles = session.query(Movie.title).all()
+    existing_titles = [title[0] for title in titles]
+    if title in existing_titles:
+        result = session.query(Movie.id, Movie.title, Movie.year, Country.name.label('country'),
+                               Genre.name.label('genre')) \
+            .join(Country, isouter=True) \
+            .join(movies_genres_association, isouter=True) \
+            .join(Genre, isouter=True) \
+            .filter(Movie.title == title) \
+            .first()
+        return render_template('show_movie.html', movie=result)
+    else:
+        flash("Record wasn't found!")
+        return redirect(url_for('send_to_find_page'))
 
 
 @app.route('/movies', methods=['POST'])
 def add_movie():
-    if not request.form['title'] or not request.form['year'] or not request.form['country'] or not request.form['genre']:
-        flash('Please enter all the fields', 'error')
-    else:
-        country = session.query(Country).filter(Country.name == request.form['country']).first()
-        g = session.query(Genre).filter(Genre.name == request.form['genre']).first()
-        print(type(country))
-        print(g)
-
+    try:
         movie_row = Movie(title=request.form['title'], year=request.form['year'],
                           country=session.query(Country).filter(Country.name == request.form['country']).first())
         movie_row.genre.append(session.query(Genre).filter(Genre.name == request.form['genre']).first())
         session.add(movie_row)
         session.commit()
         flash('Record was successfully added!')
-    return redirect(url_for('get_movies'))
+        return redirect(url_for('get_movies'))
+    except:
+        session.rollback()
+        flash('Please enter title field or check whether record already exists!')
+        return redirect(url_for('send_to_add_page'))
 
 
 @app.route("/delete", methods=["POST"])
 def delete_movie():
-    title = request.form.get("title")
-    movie_row = session.query(Movie).filter(Movie.title == title).first()
-    session.delete(movie_row)
-    session.commit()
-    flash('Record was successfully deleted!')
-    return redirect(url_for('get_movies'))
+    try:
+        title = request.form.get("title")
+        movie_row = session.query(Movie).filter(Movie.title == title).first()
+        session.delete(movie_row)
+        session.commit()
+        flash('Record was successfully deleted!')
+        return redirect(url_for('get_movies'))
+    except:
+        session.rollback()
+        flash("Record wasn't found!")
+        return redirect(url_for('send_to_delete_page'))
 
 
 if __name__ == '__main__':
